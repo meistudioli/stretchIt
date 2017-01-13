@@ -202,27 +202,19 @@
 					return stretchItValue;
 				},
 				set: function(flag) {
-					var acts;
+					var act;
 					if (typeof flag != 'boolean') return;
 					
 					stretchItValue = flag;
-					acts = ['input'];
+					act = 'input';
 
 					if (stretchItValue) {
 						if (!this.hasAttribute('data-stretch-it')) this.setAttribute('data-stretch-it', 'on');
-						acts.forEach(
-							function(act) {
-								this.addEventListener(act, evtHandler, false);
-							}
-						, this);
+						this.addEventListener(act, evtHandler, false);
 						this.stretchItRefresh();
 					} else {
 						if (this.hasAttribute('data-stretch-it')) this.removeAttribute('data-stretch-it', 'on');
-						acts.forEach(
-							function(act) {
-								this.removeEventListener(act, evtHandler, false);
-							}
-						, this);
+						this.removeEventListener(act, evtHandler, false);
 					}//end if
 				}
 			}
