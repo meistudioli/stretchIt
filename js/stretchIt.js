@@ -215,6 +215,7 @@
 								this.addEventListener(act, evtHandler, false);
 							}
 						, this);
+						this.stretchItRefresh();
 					} else {
 						if (this.hasAttribute('data-stretch-it')) this.removeAttribute('data-stretch-it', 'on');
 						acts.forEach(
@@ -265,6 +266,7 @@
 					flag = target.hasAttribute('data-stretch-it');
 					if (flag) {
 						if (!target.stretchIt) target.stretchIt = true;
+						else target.stretchItRefresh();
 					} else {
 						if (target.stretchIt) target.stretchIt = false;
 					}//end if
