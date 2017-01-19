@@ -190,9 +190,15 @@
 			stretchItRefresh: {
 				configurable: false,
 				value: function() {
+					var ins;
 					if (!this.stretchItShadow) return;
-					createCSSClass('#'+this.stretchItShadow.id, cloneStyle(this));
-					updateContent(this);
+					ins = this;
+					requestAnimationFrame(
+						function() {
+							createCSSClass('#'+ins.stretchItShadow.id, cloneStyle(ins));
+							updateContent(ins);
+						}
+					);
 				}
 			},
 			stretchIt: {
@@ -219,32 +225,6 @@
 				}
 			}
 		};
-
-		//add maxLength
-		if (typeof node.maxLength == 'undefined') {
-			prop.maxLength = {
-				enumerable: true,
-				configurable: false,
-				get: function() {
-					return maxlength;
-				},
-				set: function(num) {
-					maxlength = (typeof num == 'undefined' || parseInt(num, 10) != num) ? 0 : parseInt(num, 10);
-					this.setAttribute('maxlength', maxlength);
-				}
-			};
-			node.addEventListener('input',
-				function(e) {
-					var max;
-					if (!this.hasAttribute('maxlength')) return;
-					max = this.getAttribute('maxlength');
-					if (parseInt(max, 10) != max) return;
-
-					max = parseInt(max, 10);
-					if (this.value.length > max) this.value = this.value.substr(0, max);
-				}
-			, false);
-		}//end if
 		Object.defineProperties(node, prop);
 
 		//attrChange
